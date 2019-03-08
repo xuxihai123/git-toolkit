@@ -10,18 +10,19 @@ function init() {
 
     USER_HOME="$(env|grep ^HOME=|cut -c 6-)"
 
+    USER_LOCALL="~/local";
     if [[ -z "$REPO_NAME" ]]; then
         REPO_NAME="git-toolkit"
     fi
 
     if [[ -z "$REPO_HOME" ]]; then
-        REPO_HOME="https://github.com/tonydeng/git-toolkit.git"
+        REPO_HOME="https://github.com/xuxihai123/git-toolkit"
     fi
 
-    COMAND_PATHS=("/usr/local/bin" "$USER_HOME/bin")
-    INSTALL_PATHS=("/usr/local/$REPO_NAME" "$USER_HOME/.$REPO_NAME")
+    COMAND_PATHS=("$USER_LOCALL/bin" "$USER_HOME/bin")
+    INSTALL_PATHS=("$USER_LOCALL/$REPO_NAME" "$USER_HOME/.$REPO_NAME")
     PATH_NUM=0
-    uname -a|egrep -i linux && { echo $PATH|egrep /usr/local/sbin || PATH=$PATH:/usr/local/sbin ; }
+    uname -a|egrep -i linux && { echo $PATH|egrep $USER_LOCALL/sbin || PATH=$PATH:$USER_LOCALL/sbin ; }
     for p in "${COMAND_PATHS[@]}" ; do
         if [[ "$(echo $PATH | grep "${p}")" ]]; then
             touch "$p/git-toolkit-temp" > /dev/null 2>&1
